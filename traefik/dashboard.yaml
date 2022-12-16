@@ -1,0 +1,71 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: traefik-redirect-scheme
+  namespace: traefik
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true
+    port: "443"
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: dashboard-http
+  namespace: traefik
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`traefik.example.com`)
+      kind: Rule
+      middlewares:
+        - name: traefik-redirect-scheme      
+      services:
+        - name: api@internal
+          kind: TraefikService
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: dashboard-https
+  namespace: traefik
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`traefik.example.com`)
+      kind: Rule
+      middlewares:
+        - name: traefik-redirect-scheme
+        - name: traefik-basic-auth      
+      services:
+        - name: api@internal
+          kind: TraefikService
+  tls:
+    secretName: traefik.example.com
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: traefik-basic-auth
+  namespace: traefik
+spec:
+  basicAuth:
+    secret: authsecret
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: authsecret
+  namespace: traefik
+# htpasswd -nb admin password123 | base64
+data:
+  users: |
+    YWRtaW46JGFwcjEkczlwS1Qvei4kZXZ6QW5KUVd3QU9lNUtDOFRKeXpNMAoK

@@ -1,0 +1,44 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: pgadmin-redirect-scheme
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true
+    port: "443"
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: pgadmin-http
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`pgadmin.example.com`)
+      kind: Rule
+      middlewares:
+        - name: pgadmin-redirect-scheme      
+      services:
+        - name: pgadmin-pgadmin4
+          port: 80
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: pgadmin-https
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`pgadmin.example.com`)
+      kind: Rule     
+      services:
+        - name: pgadmin-pgadmin4
+          port: 80
+  tls:
+    secretName: pgadmin.example.com

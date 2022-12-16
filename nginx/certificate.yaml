@@ -1,0 +1,11 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: nginx.example.com
+spec:
+  dnsNames:
+    - nginx.example.com
+  secretName: nginx.example.com
+  issuerRef:
+    name: selfsigned
+    kind: ClusterIssuer
