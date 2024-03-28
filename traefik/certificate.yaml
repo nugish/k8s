@@ -2,11 +2,11 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: traefik.example.com
-  namespace: traefik
+  namespace: kube-system
 spec:
   dnsNames:
     - traefik.example.com
   secretName: traefik.example.com
   issuerRef:
-    name: selfsigned
+    name: selfsigned-cluster-issuer
     kind: ClusterIssuer

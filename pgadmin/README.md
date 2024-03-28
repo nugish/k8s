@@ -1,5 +1,5 @@
 # Pgadmin
-[pgadmin4](https://traefik.io/traefik/) is web based administration tool for PostgreSQL database.
+[pgadmin4](https://artifacthub.io/packages/helm/runix/pgadmin4) is web based administration tool for PostgreSQL database.
 
 ## Installation
 ```console

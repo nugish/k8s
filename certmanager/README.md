@@ -5,14 +5,15 @@ It can issue certificates from a variety of supported sources, including Let’s
 
 ## Installation
 ```console
-helm repo add jetstack https://charts.jetstack.io
+helm repo add jetstack https://charts.jetstack.io --force-update
 helm repo update
 helm install cert-manager jetstack/cert-manager \
 --namespace cert-manager \
 --create-namespace \
---version v1.7.1 \
+--version v1.14.4 \
 --set installCRDs=true
 
-kubectl apply -f issuer-self-certificate.yaml
+kubectl create ns sandbox
+kubectl apply -f issuer-self-certificate.yaml  
 ```
 

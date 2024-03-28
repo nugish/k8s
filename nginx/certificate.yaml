@@ -7,5 +7,5 @@ spec:
     - nginx.example.com
   secretName: nginx.example.com
   issuerRef:
-    name: selfsigned
+    name: selfsigned-cluster-issuer
     kind: ClusterIssuer

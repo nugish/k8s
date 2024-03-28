@@ -1,11 +1,12 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: pgadmin.example.com
+  name: jenkins.example.com
+  namespace: jenkins
 spec:
   dnsNames:
-    - pgadmin.example.com
-  secretName: pgadmin.example.com
+    - jenkins.example.com
+  secretName: jenkins.example.com
   issuerRef:
     name: selfsigned-cluster-issuer
     kind: ClusterIssuer
