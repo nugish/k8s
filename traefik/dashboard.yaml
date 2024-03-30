@@ -3,7 +3,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: traefik-redirect-scheme
-  namespace: kube-system
+  namespace: traefik
 spec:
   redirectScheme:
     scheme: https
@@ -15,7 +15,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: dashboard-http
-  namespace: kube-system
+  namespace: traefik
 spec:
   entryPoints:
     - web
@@ -33,7 +33,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: dashboard-https
-  namespace: kube-system
+  namespace: traefik
 spec:
   entryPoints:
     - websecure
@@ -54,7 +54,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: traefik-basic-auth
-  namespace: kube-system
+  namespace: traefik
 spec:
   basicAuth:
     secret: authsecret
@@ -64,7 +64,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: authsecret
-  namespace: kube-system
+  namespace: traefik
 # htpasswd -nb admin password123 | base64
 data:
   users: |
